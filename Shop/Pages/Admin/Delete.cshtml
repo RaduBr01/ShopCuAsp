@@ -12,16 +12,23 @@
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
+                int rowsAffected = command.ExecuteNonQuery();
+
+                if (rowsAffected > 0)
+                {
+                    // Only redirect if the delete operation was successful.
+                    Response.Redirect("/Admin/Index");
+                }
+                else
+                {
+                    // Handle the case where no rows were deleted (e.g., ID not found).
+                }
             }
         }
     }
-    catch(Exception ex)
+    catch (Exception ex)
     {
-        Console.WriteLine(ex.Message);
+        Console.WriteLine("An error occurred: " + ex.Message);
+        // You can also log the exception details to a log file or another output for better debugging.
     }
-
-    Response.Redirect("/Admin/Index");
 }
-
-

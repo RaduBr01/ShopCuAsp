@@ -53,10 +53,10 @@ namespace Shop.Pages.Admin
                                 MessageInfo messageInfo = new MessageInfo();
                                 messageInfo.Id = reader.GetInt32(0);
                                 messageInfo.FirstName = reader.GetString(1);
-                                messageInfo.LastName = reader.GetString(1);
-                                messageInfo.Email = reader.GetString(1);
-                                messageInfo.Phone = reader.GetString(1);
-                                messageInfo.Subject = reader.GetString(1);
+                                messageInfo.LastName = reader.GetString(2);
+                                messageInfo.Email = reader.GetString(3);
+                                messageInfo.Phone = reader.GetString(4);
+                                messageInfo.Subject = reader.GetString(5);
                                 messageInfo.CreatedAt = reader.GetDateTime(7).ToString("MM/dd//yyyy");
                                 listMessages.Add(messageInfo);
                             }
