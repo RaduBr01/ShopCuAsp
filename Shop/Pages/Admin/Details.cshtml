@@ -1,0 +1,53 @@
+﻿@page
+@model Shop.Pages.Admin.DetailsModel
+@{
+}
+
+
+<h1 class="col-8">Details</h1>
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">ID</label>
+    <div class="col-sm-6">
+        <input type="text" readonly class="form-control-plaintext" value="@Model.messageInfo.Id" />
+    </div >
+</div>
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">Complete Name</label>
+    <div class="col-sm-6">
+        <input type="text" readonly class="form-control-plaintext" value="@Model.messageInfo.FirstName @Model.messageInfo.LastName" />
+    </div>
+</div>
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">Phone</label>
+    <div class="col-sm-6">
+        <input type="text" readonly class="form-control-plaintext" value="@Model.messageInfo.Phone" />
+    </div>
+</div>
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">Subject</label>
+    <div class="col-sm-6">
+        <input type="text" readonly class="form-control-plaintext" value="@Model.messageInfo.Subject" />
+    </div>
+</div>
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">Message</label>
+    <div class="col-sm-6">
+        <textarea readonly class="form-control">@Model.messageInfo.Message</textarea>
+    </div>
+</div>
+
+
+<div class="row mb-4">
+    <label class="col-sm-4 col-form-label">Creation Date</label>
+    <div class="col-sm-6">
+        <input type="text" readonly class="form-control-plaintext" value="@Model.messageInfo.CreatedAt" />
+    </div>
+</div>
+
+<div class="offset-sm-4 col-sm-6">
+    <a class="btn btn-primary" href="/Admin/Index" role="button">Return</a>
+
+
+
+
+</div>
