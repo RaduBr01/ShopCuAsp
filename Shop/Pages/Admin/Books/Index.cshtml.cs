@@ -8,16 +8,49 @@ namespace Shop.Pages.Admin.Books
     {
         public List<BookInfo> listBooks= new();
         public string search = "";
+        public int page = 1;
+        private readonly int pageSize = 2;
+        public  int totalPages;
+
+
+        public string column = "id";
+        public string order = "desc";
 
 
 
         public void OnGet()
         {
+            string requestPage = Request.Query["page"];
+            if(requestPage != null)
+            {
+                try
+                {
+                    page=int.Parse(requestPage);
+
+                }
+                catch (Exception ex)
+                {
+                    page = 1;
+                    Console.WriteLine(ex.ToString());
+                }
+            }
+
+            string[] ColumnsForSort = { "id", "title", "authors", "num_pages", "price", "category", "desription", "image_filename", "created_at" };
+            column = Request.Query["column"];
+            if(column == null || !ColumnsForSort.Contains(column))
+            {
+                column = "id";
+            }
+            order = Request.Query["order"];
+            if (order == null || !order.Equals("asc")) 
+                
+                order = "desc";
             
 
-         
+
             try
             {
+
                 search = Request.Query["search"];
                 if (search == null) search = "";
 
@@ -25,16 +58,31 @@ namespace Shop.Pages.Admin.Books
                 SqlConnection connection= new SqlConnection(connectionString);
                 connection.Open();
                 string sql = "SELECT * FROM BOOKS ";
-                Console.WriteLine(search.Length);
+                string sqlCount = "SELECT COUNT(*) FROM BOOKS ";
+                if (search.Length > 0)
+                {
+                    sqlCount += " WHERE title LIKE @search OR authors LIKE @search OR id LIKE @search ";
 
-               if(search.Length> 0)
+                }
+
+                if (search.Length > 0)
                 {
                     sql += "WHERE title LIKE @search OR authors LIKE @search OR id LIKE @search ";
-                    Console.WriteLine("s-a ajuns");
+
                 }
-                sql += "ORDER BY id ASC";
-                SqlCommand cmd = new SqlCommand(sql, connection);   
-                cmd.Parameters.AddWithValue("@search", "%"+ search + "%");
+                SqlCommand cmdCount = new SqlCommand(sqlCount, connection);
+                cmdCount.Parameters.AddWithValue("@search", "%" + search + "%");
+                decimal Count = (int)cmdCount.ExecuteScalar();
+                totalPages = (int)Math.Ceiling(Count / pageSize);
+
+                sql += "ORDER BY " + column + " " + order;
+                sql += " OFFSET @skip ROWS FETCH NEXT @pagesize ROWS ONLY ";
+
+                SqlCommand cmd = new SqlCommand(sql, connection);
+
+                cmd.Parameters.AddWithValue("@search", "%" + search + "%");
+                cmd.Parameters.AddWithValue("skip", (page - 1) * pageSize);
+                cmd.Parameters.AddWithValue("@pageSize", pageSize);
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())   
                 {

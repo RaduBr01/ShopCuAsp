@@ -22,6 +22,7 @@ namespace Shop.Pages.Admin
                 }
                 catch (Exception ex)
                 {
+                    Console.WriteLine(ex.ToString());
                     page = 1;
 
                 }
