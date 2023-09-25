@@ -1,34 +1,38 @@
 ﻿@page
 @using System.Data.SqlClient;
 @{
-    string id = Request.Query["id"];
     try
     {
+        string id = Request.Query["id"];
         string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
             string sql = "DELETE FROM messages WHERE id=@id";
+            Console.WriteLine("Delete was attempted");
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
-                command.Parameters.AddWithValue("@id", id);
-                int rowsAffected = command.ExecuteNonQuery();
+                SqlParameter unitsParam = command.Parameters.AddWithValue("@id", id);
+                if (id == null)
+                {
+                    unitsParam = null;
+                }
 
-                if (rowsAffected > 0)
-                {
-                    // Only redirect if the delete operation was successful.
-                    Response.Redirect("/Admin/Index");
-                }
-                else
-                {
-                    // Handle the case where no rows were deleted (e.g., ID not found).
-                }
+                command.ExecuteNonQuery();
+                  
             }
         }
     }
-    catch (Exception ex)
-    {
+
+
+
+
+
+
+    catch (Exception ex){
         Console.WriteLine("An error occurred: " + ex.Message);
-        // You can also log the exception details to a log file or another output for better debugging.
     }
-}
+    Response.Redirect("/Admin/Index");
+
+    }
+

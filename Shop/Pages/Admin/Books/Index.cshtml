@@ -1,0 +1,80 @@
+﻿@page
+@model Shop.Pages.Admin.Books.IndexModel
+@{
+
+}
+
+
+<h1 class="my-4">List of Books from Carturesti 25.09.2023</h1>
+
+<div class="row mb-4">
+    <div class="col">
+        <a class="btn btn-primary" href='/Admin/Books/Create'> New Book</a>
+        </div>
+        <div class="col">
+            <form class="d-flex">
+                <input class="form-control me-2" type="search" name="search" value="@Model.search" placeholder="Search by Title or Author or ID" >
+                <button class="btn btn-info" type="submit">Search</button>
+            </form>
+      </div>
+
+
+</div>
+    
+
+<table class="table">
+    <thead>
+        <tr>
+
+            <th>ID</th>
+            <th>Title</th>
+            <th>Author</th>
+            <th>Pages</th>
+            <th>Price</th>
+            <th>Category</th>
+            <th>Creation Date</th>
+            <th>Image</th>
+
+
+
+        </tr>
+
+
+
+
+    </thead>
+
+    <tbody>
+        @foreach(var item in Model.listBooks)
+        {
+            <tr>
+                <td>@item.Id</td>
+                <td>@item.Title</td>
+                <td>@item.Author</td>
+                <td>@item.NumPages</td>
+                <td>(@item.Price) lei</td>
+                <td>@item.Category</td>
+                <td>@item.CreatedAt</td>
+                <td><img src="/imagesBooks/@item.ImageFileName" width="100" /></td>
+                <td>
+                <td style="white-space:nowrap">
+                    <a class="btn btn-success btn-sm" href="/Admin/Books/Edit?id=@item.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="/Admin/Books/Delete?id=@item.Id">Delete</a>
+
+                </td>
+      
+
+
+
+
+            </tr>
+        }
+
+
+
+
+    </tbody>
+
+
+
+</table>
