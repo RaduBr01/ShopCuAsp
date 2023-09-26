@@ -8,7 +8,8 @@
         using (SqlConnection connection = new SqlConnection(connectionString))
         {
             connection.Open();
-            string sql = "DELETE FROM messages WHERE phone=@id";
+            string sql = "DELETE FROM BOOKS WHERE id=@id";
+  
             using (SqlCommand command = new SqlCommand(sql, connection))
             {
                 SqlParameter unitsParam = command.Parameters.AddWithValue("@id", id);
@@ -23,10 +24,11 @@
 
 
 
-    catch (Exception ex){
+    catch (Exception ex)
+    {
         Console.WriteLine("An error occurred: " + ex.Message);
     }
-    Response.Redirect("/Admin/Index");
+    Response.Redirect("/Admin/Books");
 
-    }
+}
 

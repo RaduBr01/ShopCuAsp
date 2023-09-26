@@ -5,11 +5,11 @@
 }
 
 
-<h1 class="my-4">List of Books from Carturesti 25.09.2023</h1>
+<h1 class="my-4">List of Books</h1>
 
 <div class="row mb-4">
     <div class="col">
-        <a class="btn btn-primary" href='/Admin/Books/Create'> New Book</a>
+        <a class="btn btn-primary" href='/Admin/Books/Creation'> New Book</a>
         </div>
         <div class="col">
             <form class="d-flex">
@@ -65,14 +65,14 @@
                 <td>@item.Title</td>
                 <td>@item.Author</td>
                 <td>@item.NumPages</td>
-                <td>(@item.Price) lei</td>
+                <td>@item.Price lei</td>
                 <td>@item.Category</td>
                 <td>@item.CreatedAt</td>
                 <td><img src="/imagesBooks/@item.ImageFileName" width="100" /></td>
                 <td>
                 <td style="white-space:nowrap">
-                    <a class="btn btn-success btn-sm" href="/Admin/Books/Edit?id=@item.Id">Edit</a>
-                    <a class="btn btn-danger btn-sm" href="/Admin/Books/Delete?id=@item.Id">Delete</a>
+                    <a class="btn btn-success btn-sm" href="Books/Edit?id=@item.Id">Edit</a>
+                    <a class="btn btn-danger btn-sm" href="Books/Delete?id=@item.Id">Delete</a>
 
                 </td>
       

@@ -1,0 +1,130 @@
+﻿@page
+@model Shop.Pages.Admin.Books.CreationModel
+@{
+}
+
+
+<h1 class="my-2">New book</h1>
+@if (Model.errorMessage.Length > 0)
+{
+    <div class='alert alert-warning alert-dismissible fade show' role="alert">
+        <strong>
+            @Model.errorMessage
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss='alert' aria-label='Close'> </button>
+    </div>
+}
+else if (Model.successMessage.Length > 0)
+{
+    <div class='alert alert-success alert-dismissible fade show' role='alert'>
+        <strong>
+            @Model.successMessage
+        </strong>
+        <button type="button" class="btn-close" data-bs-dismiss='alert' aria-label='Close'> </button>
+
+    </div>
+}
+
+<form method="POST" enctype="multipart/form-data">
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">Title</label>
+            <div class="col-sm-5">
+                <input class="form-control" asp-for="Title" />
+                <span asp-validation-for="Title" class="text-danger">
+
+                </span>
+            </div>
+
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">Authors  </label>
+            <div class="col-sm-5">
+                <input class="form-control" asp-for="Authors" />
+                <span asp-validation-for="Authors" class="text-danger">
+
+                </span>
+            </div>
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">NumPages </label>
+            <div class="col-sm-5">
+                <input class="form-control" asp-for="NumPages" />
+                <span asp-validation-for="NumPages" class="text-danger">
+
+                </span>
+            </div>
+       
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">Price</label>
+            
+            <div class="col-sm-5">
+                <input class="form-control" asp-for="Price" />
+                <span asp-validation-for="Price" class="text-danger">
+
+                </span>
+            </div>
+        
+    </div>
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">Category</label>
+           
+            <div class="col-sm-5">
+                <select class="form-control" asp-for="Category">
+                    <option value ="Math">Math</option>
+                    <option value ="History">History</option>
+                    <option value ="Biography">Biography</option>
+                    <option value ="Illustrative">Illustrative</option>
+                    <option value ="Comedy">Comedy</option>
+                    <option value ="Drama">Drama</option>
+                    <option value ="Medicine">Medicine</option>
+                    <option value ="Fantasy">Fantasy</option>
+                    <option value="Other">Other</option>
+
+            </select>
+                <span asp-validation-for="Category" class="text-danger">
+
+                </span>
+            </div>
+        
+    </div>
+
+    <div class="row mb-3">
+        <label class="col-sm-2 col form-label"><mark>Description</mark></label>
+
+        <div class="col-sm-5">
+            <textarea class="form-control" asp-for="Description"></textarea>
+            <span asp-validation-for="Description" class="text-danger">
+
+            </span>
+        </div>
+
+    </div>
+
+    <div class="row mb-2">
+        <label class="col-sm-2 col form-label">ImageFile</label>
+
+        <div class="col-sm-5">
+            <input class="form-control" asp-for="ImageFile" />
+            <span asp-validation-for="ImageFile" class="text-danger">
+
+            </span>
+        </div>
+    </div>
+
+
+    <div class="row mb-4">
+        <div class="offset-sm-2 col-sm-2 d-grid">
+                <button type="submit" class="btn btn-outline-primary">Submit</button>
+        </div>
+        
+        <div class="offset-sm-2 col-sm-2 d-grid">
+            <a class="btn btn-outline-danger" href="/Admin/Books/Index" role="button">Return</a>
+        </div>
+    
+    </div>
+
+
+
+
+</form>
