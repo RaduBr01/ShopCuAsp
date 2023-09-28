@@ -2,10 +2,117 @@
 @model IndexModel
 @{
     ViewData["Title"] = "Home page";
+    ViewData["no"] = true;
 }
 
 <div class="text-center">
     <h1 class="display-4">Welcome</h1>
-    <p>Login  as <a href="/User">User</a></p>
+    <p> sibnjda@sdjgnsjdg.com 4d4eda4E! <a href="/User"> for Login </a></p>
 </div>
+
+<div class="py-5" style="background-color:lightblue">
+    <div class="container text-white">
+        <div class="row">
+            <div class="col-md-10 pb-3">
+                <h1 class="display-1">
+                    <strong>
+                        Book store de pe Wish 
+                    </strong>
+                </h1>
+             
+                <p>
+              
+                    Carti de la Vericu.
+                </p>
+            
+
+                <form class="d-flex" action="/Books">
+                    <input class="form-control me-2" type="search"  aria-label="Search">
+                    <button class="btn btn-outline-primary" type="submit">Search</button>
+                </form>
+
+
+  
+
+            </div>
+
+
+
+
+        </div>
+    </div>
+
+
+
+
+</div>
+
+<style>
+.book-item img{
+    transition:all 0.4s ease;
+}
+.book-item:hover{
+    transform:scale(1.1);
+}
+</style>
+
+
+<div class="py-3" style="background-color:white">
+    <div class="container">
+        <h1 class="pb-5 text-center display-5">
+           Carti Noi
+        </h1>
+        <div class="row">
+            @foreach (var item in Model.NewestBooks)
+            {
+                <div class="col-lg-2 sm-6 my-2">
+                    <div class="card text-center h-80 book-item">
+                        <img src="/imagesBooks/@item.ImageFileName" card-img-top p-2" alt="...">
+                        <div class="card-body">
+                            <h5>@item.Title</h5>
+                            <p>@item.Author, @item.Category</p>
+                            <h4 Price>@item.Price lei</h4>
+                            <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@item.Id" role="button">Details</a>
+                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning" href="" onclick="addToCart(this, @item.Id)">
+                                Add to cart<i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>
+    </div>
+ </div>
+
+
+
+<div class="py-3" style="background-color:white">
+    <div class="container">
+        <h1 class="pb-5 text-center display-5">
+            <strong>Top Vanzari</strong>
+        </h1>
+        <div class="row">
+            @foreach (var item in Model.TopBooks)
+            {
+                <div class="col-lg-2 sm-6 my-2">
+                    <div class="card text-center h-80 book-item">
+                        <img src="/imagesBooks/@item.ImageFileName" card-img-top p-2" alt="...">
+                        <div class="card-body">
+                            <h5>@item.Title</h5>
+                            <p>@item.Author, @item.Category</p>
+                            <h4 Price>@item.Price lei</h4>
+                            <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@item.Id" role="button">Details</a>
+                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning" href="" onclick="addToCart(this, @item.Id)">
+                                Add to cart<i class="bi bi-cart"></i>
+                            </button>
+
+                        </div>
+                    </div>
+                </div>
+            }
+        </div>  
+    </div>
+</div>
+
 
