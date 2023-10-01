@@ -1,0 +1,44 @@
+﻿@page
+@model Shop.Pages.ShoppingCartModel
+
+<div class="row p-3 mb-2 bg-dark text-white">
+    <div class="col-md-8 p-3">
+        <h4>Shopping Cart</h4>
+    </div>
+</div>
+
+
+
+<div class="table-responsive">
+    <table class="table align-middle table-dark">
+        <thead>
+            <tr>
+                <th>Author</th>
+                <th>Category</th>
+                <th>Price</th>
+                <td>Copies</td>
+                <!-- Add more headers as needed -->
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.items)
+            {
+                <tr>
+                    <td>@item.bookInfo.Author</td>
+                    <td>@item.bookInfo.Category</td>
+                    <td>@item.bookInfo.Price lei</td>
+                    <td>@item.numCopies</td>
+                    <!-- Adjust property names based on your data structure -->
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>
+
+
+
+<div class="col-md-6">
+    <div class="text-white rounded my-2 p-3" style="background-color: lightblue;">
+        <h4>Summary</h4>
+    </div>
+</div>

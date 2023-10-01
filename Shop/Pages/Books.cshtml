@@ -1,0 +1,95 @@
+﻿@page
+@model Shop.Pages.BooksModel
+@{
+}
+
+<div class="p-3 mb-2 bg-dark text-dark">
+
+<h1 class="display-1 text-center" style="color:lightblue">Book Page</h1>
+
+</div>
+
+
+
+
+
+    <div class="row">
+        <div class="col-md-4 mt-5">
+            <!-- Add margin-top for spacing -->
+            <div class="p-3 mb-4 bg-dark text-dark">
+                <!-- Increased margin-bottom for spacing -->
+            <form>
+                <div class="mb-4">
+                    <!-- Increased margin-bottom for spacing -->
+                    <h4 style="color:white">Advanced Search</h4>
+                    <input type="text"  class="form-control" asp-for="Search" placeholder="Search by Title or Author">
+                 
+                </div>
+
+
+                <h4 style="color:white">Price</h4>
+                <div class="mb-3">
+                    <select class="form-select" asp-for="PriceRange">
+                        <option value="any">Any</option>
+                        <option value="0_100">Under 100</option>
+                        <option value="100_200">100to 199</option>
+                        <option value="above200">Above 200</option>
+                    </select>
+                </div>
+                <h4 style="color:white">Category</h4>
+
+                <select class="form-select" asp-for="Category" aria-label=".form-select-lg example">
+                    <option value="any">Any</option>
+                    <option value="Culinary">Culinary</option>
+                    <option value="Math">Math</option>
+                    <option value="Illustrative">Illutrative</option>
+                    <option value="Drama">Drama</option>
+                </select>
+
+                <br />
+
+                <button type="submit" class="btn btn-outline-info">Search</button>
+            </form>
+            </div>
+        </div>
+    <div class="col-md-8">
+        <table class="table align-middle">
+            <tbody>
+                @foreach (var item in Model.listBooks)
+                {
+                    <tr>
+                        <td style="width: 150px;">
+                            <img src="/imagesBooks/@item.ImageFileName" class="img-fluid rounded" />
+                        </td>
+                        <td>
+                            <h5>@item.Title</h5>
+                            <p>@item.Author</p>
+                            <p>@item.Price</p>
+                            <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@item.Id" role="button">Details</a>
+                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning" href="" onclick="addToCart(this, @item.Id)">
+                                Add to cart<i class="bi bi-cart"></i>
+                            </button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+
+       
+            <ul class="pagination">
+                @for(int i=1;i<=Model.totalPages;i++)
+                {
+                <li class="page-item"><a class="page-link" href="?page=@(i)&Search=@(Model.Search)&PriceRange=@(Model.PriceRange)&Category=@(Model.Category)">@i</a></li>
+       
+                }
+            </ul>
+        
+    </div>
+
+    
+        
+    </div>
+
+
+

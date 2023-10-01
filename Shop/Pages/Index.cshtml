@@ -73,7 +73,7 @@
                             <p>@item.Author, @item.Category</p>
                             <h4 Price>@item.Price lei</h4>
                             <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@item.Id" role="button">Details</a>
-                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning" href="" onclick="addToCart(this, @item.Id)">
+                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning"  onclick="addToCart(this, @item.Id)">
                                 Add to cart<i class="bi bi-cart"></i>
                             </button>
 
@@ -102,8 +102,8 @@
                             <h5>@item.Title</h5>
                             <p>@item.Author, @item.Category</p>
                             <h4 Price>@item.Price lei</h4>
-                            <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@item.Id" role="button">Details</a>
-                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning" href="" onclick="addToCart(this, @item.Id)">
+                            <a class="btn btn-primary btn-sm my-2" href="/BookDetails?id=@(item.Id)" role="button">Details</a>
+                            <button type="button" class="btn btn-primary btn-sm my-2 btn-warning"  onclick="addToCart(this, @item.Id)">
                                 Add to cart<i class="bi bi-cart"></i>
                             </button>
 

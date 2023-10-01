@@ -14,7 +14,7 @@
 
         <div class="row">
             <div class="col-md-5">
-                <img src="/imagesBooks/@Model.bookInfo.ImageFileName" class="img-fluid-rounded" alt="Book Image">
+                <img src="/imagesBooks/@Model.bookInfo.ImageFileName" class="img-fluid-rounded" width="400" height="600" alt="Book Image">
                 <button class="btn btn-primary btn-sm my-2 btn-warning" onclick="addToCart(this, @Model.bookInfo.Id)">
                     Add to Cart <i class="bi bi-cart"></i>
                 </button>
@@ -45,14 +45,15 @@
                         </tr>
 
 
-                        <tr>
-                            <td><strong>Description</strong></td>
-                            <td>@Model.bookInfo.Description</td>
-                        </tr>
                     </tbody>
                 </table>
+                <p><strong>Description:</strong></p>
+                <br />
+                <p style="white-space:pre-wrap; word-wrap:break-word">@Model.bookInfo.Description</p>
             </div>
         </div>
+
+
 
     
     </div>
