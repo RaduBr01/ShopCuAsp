@@ -1,6 +1,17 @@
 ﻿@page
 @model Shop.Pages.ShoppingCartModel
+@{
+    decimal createTotalPrice(List<OrderItem> items)
+    {
+        decimal totalPrice = 0;
+        for (int i = 0; i < items.Count; i++)
+        {
+            totalPrice += items[i].totalPrice;
+        }
+        return totalPrice;
+    }
 
+}
 <div class="row p-3 mb-2 bg-dark text-white">
     <div class="col-md-8 p-3">
         <h4>Shopping Cart</h4>
@@ -17,6 +28,9 @@
                 <th>Category</th>
                 <th>Price</th>
                 <td>Copies</td>
+                <td></td>
+                <td></td>
+            
                 <!-- Add more headers as needed -->
             </tr>
         </thead>
@@ -28,17 +42,32 @@
                     <td>@item.bookInfo.Category</td>
                     <td>@item.bookInfo.Price lei</td>
                     <td>@item.numCopies</td>
-                    <!-- Adjust property names based on your data structure -->
+                    <td><a class="btn btn-outline-info btn-sm" href="/ShoppingCart?action=sub&id=@(item.bookInfo.Id)" role="button">-</a>
+                    <a class="btn btn-outline-info btn-sm" href="/ShoppingCart?action=add&id=@(item.bookInfo.Id)" role="button">+</a>
+                    </td>>
+                    <td><a href="/ShoppingCart?action=delete&id=@(item.bookInfo.Id)"><i class="bi bi-trash"></i></a></td>
+                
                 </tr>
             }
         </tbody>
     </table>
+
+   
 </div>
 
 
 
-<div class="col-md-6">
-    <div class="text-white rounded my-2 p-3" style="background-color: lightblue;">
-        <h4>Summary</h4>
+<div class="container bg-info fixed-bottom">
+    <div class="row">
+        <div class="col">
+            Total Price:
+        </div>
+        <div class="col text-right">
+            <h2>@createTotalPrice(@Model.items)</h2>
+        </div>
     </div>
 </div>
+
+
+
+

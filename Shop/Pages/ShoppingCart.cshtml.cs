@@ -1,5 +1,7 @@
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Shop.Pages;
 using Shop.Pages.Admin.Books;
 using System.Data.SqlClient;
 
@@ -39,6 +41,49 @@ namespace Shop.Pages
 
         public void OnGet()
         {
+            var bookDictionary= getBookDictionary();
+            string? action = Request.Query["action"];
+            string? id = Request.Query["id"];
+            if(action != null && id!=null && bookDictionary.ContainsKey(id))
+            {
+
+
+
+               if(action.Equals("add"))
+                {
+                    bookDictionary[id] += 1;
+                }
+               else if (action.Equals("sub")) 
+                {
+                    if (bookDictionary[id]>1)
+                        bookDictionary[id] -= 1;
+                }
+               else if (action.Equals("delete"))
+                {
+                    bookDictionary.Remove(id);
+                }
+                string newCookie = "";
+                foreach(var keyValuePair in bookDictionary)
+                {
+                    for(int i=0;i<keyValuePair.Value;i++)   
+                    {
+                        newCookie += "-" + keyValuePair.Key;
+                    }
+                }
+
+                if(newCookie.Length> 0) 
+                {
+                    newCookie = newCookie.Substring(1);
+                
+                }
+
+                var cookieOptions=new CookieOptions();
+                cookieOptions.Expires=DateTime.Now.AddDays(365);
+                cookieOptions.Path = "/";
+                Response.Cookies.Append("shopping_cart",newCookie,cookieOptions);
+                Response.Redirect(Request.Path.ToString());
+            
+            }
             try
             {
                 string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
@@ -88,3 +133,5 @@ namespace Shop.Pages
         public decimal totalPrice = 0;
     }
 }
+
+
