@@ -101,7 +101,7 @@ namespace Shop.Pages
                     Console.WriteLine("Da");
                 }
 
-                sql += "ORDER BY id ASC ";
+                sql += " ORDER BY id ASC ";
                 sql += "OFFSET @skip ROWS FETCH NEXT @pageSize ROWS ONLY ";
 
 
@@ -111,7 +111,7 @@ namespace Shop.Pages
                 cmd.Parameters.AddWithValue("@category",Category ); 
                 cmd.Parameters.AddWithValue("@skip",(page-1)*pageSize);
                 cmd.Parameters.AddWithValue("@pageSize", pageSize);
-
+                
              
                 SqlDataReader reader = cmd.ExecuteReader();
                 while (reader.Read())
