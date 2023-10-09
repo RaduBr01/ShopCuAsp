@@ -3,12 +3,21 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Shop.Pages;
 using Shop.Pages.Admin.Books;
+using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
+using System.Transactions;
 
 namespace Shop.Pages
 {
+    [BindProperties]
     public class ShoppingCartModel : PageModel
     {
+        [Required(ErrorMessage = "The address is required")]
+        public string Address { get; set; } = "";
+
+
+        [Required(ErrorMessage = "The payment method is required")]
+        public string PaymentMethod { get; set; } = "";
         public List <OrderItem> items= new List<OrderItem> ();
 
         private Dictionary<String, int> getBookDictionary()
@@ -123,7 +132,47 @@ namespace Shop.Pages
             {
                 Console.WriteLine(ex.Message);
             }
+         
         }
+        public string ErrorMessage="";
+        public string SuccessMessage="";
+        public void OnPost()
+        {
+            if(!ModelState.IsValid)
+            {
+                
+            }
+            var bookDictionary=getBookDictionary();
+            if(bookDictionary.Count < 1) 
+            {
+                ErrorMessage = "Cart is empty";
+                return;
+            }
+            try
+            {
+                string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                string sql = "INSERT INTO orders (client_id,order_date, "+
+                    "delivery_adress, payment_method, payment_status,order_status) "+
+                    "VALUES('0', CURRENT_TIMESTAMP, " +
+                    "@delivery_adress, @payment_method, 'pending', 'created')";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@delivery_adress", Address);
+                cmd.Parameters.AddWithValue("payment_method", PaymentMethod);
+          
+
+            }
+            catch(Exception ex) 
+            {
+                ErrorMessage = ex.Message; return;
+
+            }
+            Response.Cookies.Delete("shopping_cart");
+            SuccessMessage = "Order Created";
+            
+        }
+
     }
 
     public class OrderItem

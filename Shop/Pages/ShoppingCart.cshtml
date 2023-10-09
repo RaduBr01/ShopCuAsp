@@ -17,8 +17,19 @@
         <h4>Shopping Cart</h4>
     </div>
 </div>
+@if (Model.ErrorMessage.Length > 0)
+{
+    <div class="alert alert-" role="alert">
+        @Model.ErrorMessage
+    </div>
+}
 
-
+@if (Model.SuccessMessage.Length > 0)
+{
+    <div class="alert alert-primary" role="alert">
+        @Model.SuccessMessage
+    </div>
+}
 
 <div class="table-responsive">
     <table class="table align-middle table-dark">
@@ -56,18 +67,51 @@
 </div>
 
 
-
-<div class="container bg-info fixed-bottom">
+<div class="container">
     <div class="row">
-        <div class="col">
-            Total Price:
+        <!-- Left Column (Payment Method Form) -->
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-body">
+                    <h4>Payment Method</h4>
+                    <!-- Add your payment method form here -->
+
+                    
+                         <div class="form-group">
+                            <select class="form-control" >
+                                <option>Cash</option>
+                                <option>Credit Card</option>
+                                <option>PayPal</option>
+                            
+                            </select>
+                        </div>
+               
+                    <label for="exampleInputEmail1">Address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter Delivery Address">
+                    <small id="emailHelp" class="form-text text-muted">I couldn t load the adress from the logged in user since the database doesn t work</small>
+                </div>
+            </div>
         </div>
-        <div class="col text-right">
-            <h2>@createTotalPrice(@Model.items)</h2>
+
+        <!-- Right Column (Total Price and Address) -->
+        <div class="col-md-4">
+           
+            <div class="container bg-outline-info ">
+                <div class="row">
+                    <div class="col">
+                        <h4>Total Price:</h4>
+                    </div>
+                    <div class="col text-right">
+                        <h2>@createTotalPrice(@Model.items) lei</h2>
+                    </div>
+                </div>
+              
         </div>
-    </div>
-</div>
-
-
-
-
+        <form method="post">
+        <div class="text-center">
+                <button type="submit" class="btn btn-lg btn-outline-info" >Checkout</button>
+            </div>
+            </form>
+        </div>
+     </div>
+</div>  
