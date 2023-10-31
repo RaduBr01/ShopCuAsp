@@ -1,0 +1,35 @@
+﻿@page
+@model Shop.Pages.Admin.DetailsOrderItemsModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order Items Details</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Order Items Details</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Order ID</th>
+                    <th>Book ID</th>
+                    <th>Quantity</th>
+                    <th>Unit Price</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var message in Model.Messages)
+                {
+                    <tr>
+                        <td>@message.orderId</td>
+                        <td>@message.bookId</td>
+                        <td>@message.quantity</td>
+                        <td>@message.unitPrice</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

@@ -1,0 +1,42 @@
+﻿@page
+@model Shop.Pages.Admin.Orders.IndexModel
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Order List</title>
+</head>
+<body>
+    <div class="container">
+        <h1>Order List</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Order Date</th>
+                    <th>Delivery Address</th>
+                    <th>Payment Method</th>
+                    <th>Payment Status</th>
+                    <th>Order Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var order in Model.orders)
+                {
+                    <tr>
+                        <td>@order.Id</td>
+                        <td>@order.orderDate</td>
+                        <td>@order.deliveryAddress</td>
+                        <td>@order.paymentMethod</td>
+                        <td>@order.paymentStatus</td>
+                        <td>@order.orderStatus</td>
+                        <td>
+                            <a class="btn btn-outline-primary" asp-page="/Admin/Orders/Details" >View Details</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

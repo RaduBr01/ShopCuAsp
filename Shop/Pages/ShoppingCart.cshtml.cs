@@ -47,7 +47,6 @@ namespace Shop.Pages
 
 
 
-
         public void OnGet()
         {
             var bookDictionary= getBookDictionary();
@@ -107,7 +106,7 @@ namespace Shop.Pages
                     SqlDataReader reader=cmd.ExecuteReader();
                        while(reader.Read()) 
                         {
-                            OrderItem item = new OrderItem();
+                            OrderItem item = new();
   
                             item.bookInfo.Id = reader.GetInt32(0);
                             item.bookInfo.Title = reader.GetString(1);
@@ -138,9 +137,9 @@ namespace Shop.Pages
         public string SuccessMessage="";
         public void OnPost()
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
-                
+
             }
             var bookDictionary=getBookDictionary();
             if(bookDictionary.Count < 1) 
@@ -153,14 +152,41 @@ namespace Shop.Pages
                 string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
                 SqlConnection connection = new SqlConnection(connectionString);
                 connection.Open();
-                string sql = "INSERT INTO orders (client_id,order_date, "+
-                    "delivery_adress, payment_method, payment_status,order_status) "+
-                    "VALUES('0', CURRENT_TIMESTAMP, " +
-                    "@delivery_adress, @payment_method, 'pending', 'created')";
+                string sql = "INSERT INTO orders (order_date, " +
+             "delivery_adress, payment_method, payment_status, order_status) " +
+             "VALUES (CURRENT_TIMESTAMP, " +
+             "@delivery_adress, @payment_method, 'pending', 'created'); " +
+             "SELECT SCOPE_IDENTITY();";
+
                 SqlCommand cmd = new SqlCommand(sql, connection);
+                Address = Request.Form["deliveryAddress"];
                 cmd.Parameters.AddWithValue("@delivery_adress", Address);
-                cmd.Parameters.AddWithValue("payment_method", PaymentMethod);
-          
+                cmd.Parameters.AddWithValue("@payment_method", PaymentMethod);
+
+                // Use ExecuteScalar to retrieve the generated order ID
+                int orderId = Convert.ToInt32(cmd.ExecuteScalar());
+            
+
+                string order_item_sql = "INSERT INTO order_items (order_id,book_id,quantity,unit_price) " +
+                    "VALUES (@order_id,@book_id,@quantity,@unit_price)";
+
+
+              
+
+
+                foreach ( var item in bookDictionary)
+                {
+                    string bookID = item.Key;
+                    int quantity = item.Value;
+                    decimal unitPrice = getbookPrice(bookID);
+
+                    SqlCommand cmd2 = new SqlCommand(order_item_sql, connection);
+                    cmd2.Parameters.AddWithValue("@order_id", orderId);
+                    cmd2.Parameters.AddWithValue("@book_id", bookID);
+                    cmd2.Parameters.AddWithValue("@quantity", quantity);
+                    cmd2.Parameters.AddWithValue("unit_price", unitPrice);
+                    cmd2.ExecuteNonQuery();
+                }
 
             }
             catch(Exception ex) 
@@ -173,6 +199,35 @@ namespace Shop.Pages
             
         }
 
+        private decimal getbookPrice(string bookID)
+        {
+            decimal price=0;
+
+            try
+            {
+                string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
+                SqlConnection connection = new SqlConnection(connectionString);
+                connection.Open();
+                string sql = "SELECT price from BOOKS WHERE id=@id";
+                SqlCommand cmd = new SqlCommand(sql, connection);
+                cmd.Parameters.AddWithValue("@id", bookID);
+                SqlDataReader reader = cmd.ExecuteReader();
+            
+                if (reader.Read())
+                {
+                    price = reader.GetDecimal(0);
+                }
+
+                reader.Dispose();
+
+                
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine(ex.Message);
+            }
+            return price;
+        }
     }
 
     public class OrderItem

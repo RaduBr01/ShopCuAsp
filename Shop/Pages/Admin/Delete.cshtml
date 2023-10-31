@@ -1,32 +1,51 @@
 ﻿@page
-@using System.Data.SqlClient;
-@{
-    try
-    {
-        string id = Request.Query["id"];
-        string connectionString = "Data Source=.\\sqlexpress;Initial Catalog=Shop;Integrated Security=True";
-        using (SqlConnection connection = new SqlConnection(connectionString))
-        {
-            connection.Open();
-            string sql = "DELETE FROM messages WHERE phone=@id";
-            using (SqlCommand command = new SqlCommand(sql, connection))
-            {
-                SqlParameter unitsParam = command.Parameters.AddWithValue("@id", id);
-                command.ExecuteNonQuery();
+@model Shop.Pages.Admin.DetailsModel
 
-            }
-        }
-    }
-
-
-
-
-
-
-    catch (Exception ex){
-        Console.WriteLine("An error occurred: " + ex.Message);
-    }
-    Response.Redirect("/Admin/Index");
-
-    }
-
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Message Details</title>
+    <!-- Add your CSS styles here -->
+    <style>
+        /* Add your custom CSS styles here */
+    </style>
+</head>
+<body>
+    <h1>Message Details</h1>
+    <table>
+        <tr>
+            <th>ID</th>
+            <td>@Model.messageInfo.Id</td>
+        </tr>
+        <tr>
+            <th>First Name</th>
+            <td>@Model.messageInfo.FirstName</td>
+        </tr>
+        <tr>
+            <th>Last Name</th>
+            <td>@Model.messageInfo.LastName</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.messageInfo.Email</td>
+        </tr>
+        <tr>
+            <th>Phone</th>
+            <td>@Model.messageInfo.Phone</td>
+        </tr>
+        <tr>
+            <th>Subject</th>
+            <td>@Model.messageInfo.Subject</td>
+        </tr>
+        <tr>
+            <th>Message</th>
+            <td>@Model.messageInfo.Message</td>
+        </tr>
+        <tr>
+            <th>Created At</th>
+            <td>@Model.messageInfo.CreatedAt</td>
+        </tr>
+    </table>
+    <a asp-page="/Admin/Index">Back to Messages</a>
+</body>
+</html>
