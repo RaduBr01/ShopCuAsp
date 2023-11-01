@@ -31,7 +31,7 @@
                         <td>@order.paymentStatus</td>
                         <td>@order.orderStatus</td>
                         <td>
-                            <a class="btn btn-outline-primary" asp-page="/Admin/Orders/Details" >View Details</a>
+                            <a class="btn btn-outline-primary" href="/Admin/Orders/Details?id=@order.Id">View Details</a>
                         </td>
                     </tr>
                 }
