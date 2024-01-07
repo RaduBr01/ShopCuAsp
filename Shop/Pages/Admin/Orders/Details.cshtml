@@ -12,6 +12,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>Order_item_id</th>
                     <th>Order ID</th>
                     <th>Book ID</th>
                     <th>Quantity</th>
@@ -22,6 +23,7 @@
                 @foreach (var message in Model.Messages)
                 {
                     <tr>
+                        <td>@message.order_item_id</td>
                         <td>@message.orderId</td>
                         <td>@message.bookId</td>
                         <td>@message.quantity</td>

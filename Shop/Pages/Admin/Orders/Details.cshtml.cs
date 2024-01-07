@@ -32,10 +32,11 @@ namespace Shop.Pages.Admin
                             {
                                 Console.WriteLine("am ajuns aici");
                                 MessageInfo messageInfo = new MessageInfo();
-                                messageInfo.orderId = reader.GetInt32(0); // Assuming the order_id is in the first column
-                                messageInfo.bookId = reader.GetInt32(1);  // Assuming the book_id is in the second column
-                                messageInfo.quantity = reader.GetInt32(2); // Assuming the quantity is in the third column
-                                messageInfo.unitPrice = reader.GetInt32(3); // Assuming the unit_price is in the fourth column
+                                messageInfo.order_item_id = reader.GetInt32(0);
+                                messageInfo.orderId = reader.GetInt32(1); // Assuming the order_id is in the first column
+                                messageInfo.bookId = reader.GetInt32(2);  // Assuming the book_id is in the second column
+                                messageInfo.quantity = reader.GetInt32(3); // Assuming the quantity is in the third column
+                                messageInfo.unitPrice = reader.GetDecimal(4); // Assuming the unit_price is in the fourth column
                                 Messages.Add(messageInfo);
                             }
                         }
@@ -50,6 +51,7 @@ namespace Shop.Pages.Admin
 
         public class MessageInfo
         {
+            public int order_item_id;
             public int orderId;
             public int bookId;
             public int quantity;

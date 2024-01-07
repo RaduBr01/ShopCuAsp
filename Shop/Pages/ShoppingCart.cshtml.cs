@@ -5,6 +5,7 @@ using Shop.Pages;
 using Shop.Pages.Admin.Books;
 using System.ComponentModel.DataAnnotations;
 using System.Data.SqlClient;
+using System.Drawing.Printing;
 using System.Transactions;
 
 namespace Shop.Pages
@@ -179,6 +180,11 @@ namespace Shop.Pages
                     string bookID = item.Key;
                     int quantity = item.Value;
                     decimal unitPrice = getbookPrice(bookID);
+
+                    Console.WriteLine(bookID);
+                    Console.WriteLine(quantity);
+                    Console.WriteLine(unitPrice);
+                    Console.WriteLine(orderId);
 
                     SqlCommand cmd2 = new SqlCommand(order_item_sql, connection);
                     cmd2.Parameters.AddWithValue("@order_id", orderId);
